@@ -383,10 +383,14 @@ function score(client, car) {
   const price = carPrice(car);
 
   if (client.budget) {
-    if (price !== null && price > client.budget * 1.10) return -1;
+    // Si se pasa del presupuesto no se descarta: baja el puntaje de a poco
+    // (10% arriba → 80% del peso, 25% → 50%, 50% o más → 0).
     possible += WEIGHTS.budget;
     if (price === null || price <= client.budget) earned += WEIGHTS.budget;
-    else earned += Math.round(WEIGHTS.budget * 0.4);
+    else {
+      const exceso = price / client.budget - 1;
+      earned += Math.round(WEIGHTS.budget * Math.max(0, 1 - exceso * 2));
+    }
   }
 
   const clientBrands = [];
@@ -463,12 +467,12 @@ function showMatchDetail(clienteId, carId) {
 
   if (cliente.budget) {
     const ok = price === null || price <= cliente.budget;
-    const excede = price !== null && price > cliente.budget * 1.10;
+    const exceso = ok ? 0 : Math.round((price / cliente.budget - 1) * 100);
     rows.push({
       label: 'Presupuesto',
       val: cliente.budget ? `Hasta ${fp(cliente.budget)}` : '—',
-      carVal: price ? fp(price) : 'Sin precio',
-      ok: excede ? 'block' : ok ? 'full' : 'partial',
+      carVal: price ? fp(price) + (exceso > 0 ? ` (+${exceso}%)` : '') : 'Sin precio',
+      ok: ok ? 'full' : exceso >= 50 ? 'none' : 'partial',
     });
   }
 
