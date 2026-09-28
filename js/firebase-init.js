@@ -8,12 +8,12 @@
    ═══════════════════════════════════════════════════════════════ */
 
 const firebaseConfig = {
-  apiKey:            "PEGAR_AQUI",
-  authDomain:        "PEGAR_AQUI",
-  projectId:         "PEGAR_AQUI",
-  storageBucket:     "PEGAR_AQUI",
-  messagingSenderId: "PEGAR_AQUI",
-  appId:             "PEGAR_AQUI",
+  apiKey:            "AIzaSyDJ4gdNqE7MsQ2CIGG4dgE0NdeX0QgnQBo",
+  authDomain:        "fir-crm-1fdc0.firebaseapp.com",
+  projectId:         "fir-crm-1fdc0",
+  storageBucket:     "fir-crm-1fdc0.firebasestorage.app",
+  messagingSenderId: "823099614739",
+  appId:             "1:823099614739:web:85db05db11c69553ad81e6",
 };
 
 firebase.initializeApp(firebaseConfig);
